@@ -1,0 +1,28 @@
+{
+  "preferences": {
+    "maxThinkingTokens": 10000
+  },
+  "agentSettings": {
+    "model": "haiku"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Agent",
+        "hooks": [{"type": "command", "command": "python hooks/agent-guard.py"}]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": ".*",
+        "hooks": [{"type": "command", "command": "python hooks/session-savings.py"}]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": ".*",
+        "hooks": [{"type": "command", "command": "python hooks/compact-reminder.py"}]
+      }
+    ]
+  }
+}

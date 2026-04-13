@@ -1,0 +1,17 @@
+# Pro version (Gumroad distribution, not public)
+pro/
+
+# Claude Code local files
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Internal files (not for public repo)
+gumroad-copy.md
+benchmark-capture.png
+free/banner-tokenguard-free.png

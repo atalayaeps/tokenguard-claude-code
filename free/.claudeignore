@@ -1,0 +1,73 @@
+# Dependencies
+node_modules/
+vendor/
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Build output
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+target/
+
+# Package locks (large, not useful for AI)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+Pipfile.lock
+poetry.lock
+composer.lock
+Gemfile.lock
+Cargo.lock
+
+# Version control
+.git/
+
+# Coverage and tests output
+coverage/
+.nyc_output/
+htmlcov/
+.pytest_cache/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Media and binaries
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.ico
+*.svg
+*.mp4
+*.mp3
+*.woff
+*.woff2
+*.ttf
+*.eot
+*.pdf
+*.zip
+*.tar.gz
+
+# Logs
+*.log
+logs/
+
+# Environment
+.env
+.env.*
