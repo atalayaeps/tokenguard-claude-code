@@ -54,7 +54,7 @@ Full benchmark scoring up to 100/100. Anti-patterns guide with 10 documented pat
 
 **$9 launch price** — first 50 customers. One-time payment, lifetime access.
 
-**[Get TokenGuard Pro →](TODO_GUMROAD_URL)**
+**[Get TokenGuard Pro →](https://4229038676731.gumroad.com/l/akaye)**
 
 ## Tested in production
 
