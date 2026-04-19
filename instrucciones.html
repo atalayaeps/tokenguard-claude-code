@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="TokenGuard — Kit de ahorro de tokens para Claude Code">
+<meta property="og:description" content="4 reglas que reducen tu consumo un 20-25%. Gratis. Sin configuración.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<title>TokenGuard Free — Guía de inicio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root {
+    --bg: #0a0a0a;
+    --bg-card: #111111;
+    --bg-step: #0d1a14;
+    --border: #222222;
+    --border-green: #1a3a2a;
+    --text: #f5f5f5;
+    --text-sec: #b0b0b0;
+    --text-muted: #787878;
+    --green: #5DCEA8;
+    --green-glow: rgba(93,206,168,0.15);
+    --red: #e07878;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 56px 28px;
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  .hero-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--green);
+    text-shadow: 0 0 40px var(--green-glow);
+    margin-bottom: 12px;
+  }
+  .hero-sub {
+    font-size: 20px;
+    color: var(--text-sec);
+    margin-bottom: 6px;
+  }
+  .hero-tagline {
+    font-size: 16px;
+    color: var(--text-sec);
+  }
+
+  /* ─── Steps ─── */
+  .step {
+    background: var(--bg-step);
+    border: 1px solid var(--border-green);
+    border-radius: 12px;
+    padding: 36px 32px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .step-number {
+    position: absolute;
+    top: -18px;
+    left: 28px;
+    background: var(--green);
+    color: #0a0a0a;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 800;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    margin-top: 4px;
+  }
+  .step-text {
+    font-size: 17px;
+    color: var(--text-sec);
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+  .step-text:last-child { margin-bottom: 0; }
+  .step-note {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    line-height: 1.6;
+  }
+
+  /* ─── Code blocks ─── */
+  .code-block {
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 22px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    color: var(--green);
+    margin-bottom: 18px;
+    overflow-x: auto;
+    line-height: 1.7;
+  }
+  .code-comment { color: var(--text-muted); }
+
+  /* ─── Options grid ─── */
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .option {
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .option.recommended {
+    border-color: var(--green);
+    box-shadow: 0 0 12px var(--green-glow);
+  }
+  .option-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .option-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .option-desc {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ─── Simulated Report Preview ─── */
+  .preview-frame {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+  .preview-bar {
+    background: #161616;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .preview-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .preview-dot.r { background: #e07878; }
+  .preview-dot.y { background: #f0c674; }
+  .preview-dot.g { background: #5DCEA8; }
+  .preview-bar-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-left: 8px;
+  }
+  .preview-content {
+    padding: 24px;
+  }
+
+  /* ─── Sim cards ─── */
+  .sim-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .sim-card {
+    background: #1a1a1a;
+    border: 1px solid #252525;
+    border-radius: 6px;
+    padding: 14px;
+  }
+  .sim-card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .sim-card-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  /* Sim bars */
+  .sim-section-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .sim-bars { margin-bottom: 20px; }
+  .sim-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+  }
+  .sim-bar-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    min-width: 44px;
+    text-align: right;
+  }
+  .sim-bar-track {
+    flex: 1;
+    height: 16px;
+    background: #1a1a1a;
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+  }
+  .sim-bar-good { background: var(--green); opacity: 0.7; }
+  .sim-bar-bad { background: var(--red); opacity: 0.7; }
+  .sim-bar-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-sec);
+    min-width: 36px;
+  }
+
+  /* ─── File tree ─── */
+  .file-tree {
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 2;
+    margin-bottom: 18px;
+  }
+  .file-tree .hl { color: var(--green); }
+  .file-tree .desc { color: #444; }
+
+  /* ─── Pro Section ─── */
+  .pro-section {
+    background: linear-gradient(135deg, #0f1a15 0%, #0a0a0a 100%);
+    border: 1px solid #1a2a20;
+    border-radius: 12px;
+    padding: 40px 36px;
+    text-align: center;
+    margin-top: 48px;
+    margin-bottom: 40px;
+  }
+  .pro-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .pro-features {
+    text-align: left;
+    max-width: 460px;
+    margin: 0 auto 28px;
+  }
+  .pro-feature {
+    font-size: 16px;
+    color: var(--text-sec);
+    padding: 8px 0;
+    display: flex;
+    gap: 10px;
+  }
+  .pro-feature .check { color: var(--green); flex-shrink: 0; }
+  .pro-btn {
+    display: inline-block;
+    background: var(--green);
+    color: #0a0a0a;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 14px 36px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .pro-btn:hover { opacity: 0.9; }
+  .pro-price {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 10px;
+  }
+
+  /* ─── Footer ─── */
+  .footer {
+    text-align: center;
+    padding: 32px;
+    font-size: 15px;
+    color: var(--text-secondary);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .footer a { color: var(--green); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .footer-tagline { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+
+  code {
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.92em;
+  }
+
+  @media (max-width: 600px) {
+    .sim-cards { grid-template-columns: repeat(2, 1fr); }
+    .options { grid-template-columns: 1fr; }
+    .step { padding: 28px 22px; }
+    body { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-logo">TokenGuard</div>
+    <div class="hero-sub">Kit de ahorro de tokens para Claude Code</div>
+    <div class="hero-tagline">4 reglas que reducen tu consumo un 20-25%. Gratis. Sin configuración.</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);margin-top:8px;">v1.0</div>
+  </div>
+
+  <!-- ═══ PREVIEW DEL INFORME ═══ -->
+  <div style="margin-bottom: 12px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--green);text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;">Vista previa</div>
+    <div style="font-size:22px;font-weight:700;margin-bottom:6px;">Así se ve tu informe</div>
+    <div style="font-size:16px;color:var(--text-muted);margin-bottom:20px;">Datos reales de tus sesiones. Verde = útil. Rojo = desperdicio.</div>
+  </div>
+
+  <div class="preview-frame">
+    <div class="preview-bar">
+      <div class="preview-dot r"></div>
+      <div class="preview-dot y"></div>
+      <div class="preview-dot g"></div>
+      <div class="preview-bar-title">report-2026-04-17.html</div>
+    </div>
+    <div class="preview-content">
+
+      <!-- Sim Summary Cards -->
+      <div class="sim-cards">
+        <div class="sim-card">
+          <div class="sim-card-label">Sesiones</div>
+          <div class="sim-card-value" style="color:var(--text)">10</div>
+        </div>
+        <div class="sim-card">
+          <div class="sim-card-label">Eficiencia</div>
+          <div class="sim-card-value" style="color:var(--green)">74.2%</div>
+        </div>
+        <div class="sim-card">
+          <div class="sim-card-label">Tokens desperdiciados</div>
+          <div class="sim-card-value" style="color:var(--red)">53,234</div>
+        </div>
+        <div class="sim-card">
+          <div class="sim-card-label">Racha</div>
+          <div class="sim-card-value" style="color:var(--green)">3</div>
+        </div>
+      </div>
+
+      <!-- Sim Efficiency Bars -->
+      <div class="sim-section-title">Eficiencia por sesión</div>
+      <div class="sim-bars">
+        <div class="sim-bar-row">
+          <div class="sim-bar-label">08 abr</div>
+          <div class="sim-bar-track">
+            <div class="sim-bar-good" style="width:65%"></div>
+            <div class="sim-bar-bad" style="width:35%"></div>
+          </div>
+          <div class="sim-bar-val">65%</div>
+        </div>
+        <div class="sim-bar-row">
+          <div class="sim-bar-label">09 abr</div>
+          <div class="sim-bar-track">
+            <div class="sim-bar-good" style="width:58%"></div>
+            <div class="sim-bar-bad" style="width:42%"></div>
+          </div>
+          <div class="sim-bar-val">58%</div>
+        </div>
+        <div class="sim-bar-row">
+          <div class="sim-bar-label">10 abr</div>
+          <div class="sim-bar-track">
+            <div class="sim-bar-good" style="width:72%"></div>
+            <div class="sim-bar-bad" style="width:28%"></div>
+          </div>
+          <div class="sim-bar-val">72%</div>
+        </div>
+        <div class="sim-bar-row">
+          <div class="sim-bar-label">12 abr</div>
+          <div class="sim-bar-track">
+            <div class="sim-bar-good" style="width:81%"></div>
+            <div class="sim-bar-bad" style="width:19%"></div>
+          </div>
+          <div class="sim-bar-val">81%</div>
+        </div>
+        <div class="sim-bar-row">
+          <div class="sim-bar-label">15 abr</div>
+          <div class="sim-bar-track">
+            <div class="sim-bar-good" style="width:89%"></div>
+            <div class="sim-bar-bad" style="width:11%"></div>
+          </div>
+          <div class="sim-bar-val">89%</div>
+        </div>
+      </div>
+
+      <!-- Archivos más releídos -->
+      <div class="sim-section-title">Archivos más releídos</div>
+      <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
+        <thead>
+          <tr>
+            <th style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;padding:6px 8px;border-bottom:1px solid #252525;text-align:left;">Archivo</th>
+            <th style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;padding:6px 8px;border-bottom:1px solid #252525;text-align:right;">Veces</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-sec);padding:5px 8px;">server.py</td><td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--red);padding:5px 8px;text-align:right;">35× de más</td></tr>
+          <tr><td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-sec);padding:5px 8px;">memoria-cl.md</td><td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--red);padding:5px 8px;text-align:right;">7× de más</td></tr>
+          <tr><td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-sec);padding:5px 8px;">clipboard-mp.png</td><td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--red);padding:5px 8px;text-align:right;">6× de más</td></tr>
+          <tr><td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-sec);padding:5px 8px;">CLAUDE-CL.md</td><td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--red);padding:5px 8px;text-align:right;">5× de más</td></tr>
+          <tr><td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-sec);padding:5px 8px;">CLAUDE.md</td><td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--red);padding:5px 8px;text-align:right;">4× de más</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Registro de actividad -->
+      <div class="sim-section-title">Registro de actividad</div>
+      <div>
+        <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #1a1a1a;font-size:12px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--red);margin-top:4px;flex-shrink:0;"></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);min-width:110px;">2026-04-17 12:31</div>
+          <div style="color:var(--text-sec);">4 duplicado(s) detectado(s) — ~4.510 tokens desperdiciados</div>
+        </div>
+        <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #1a1a1a;font-size:12px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--red);margin-top:4px;flex-shrink:0;"></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);min-width:110px;">2026-04-17 12:55</div>
+          <div style="color:var(--text-sec);">2 duplicado(s) detectado(s) — ~714 tokens desperdiciados</div>
+        </div>
+        <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #1a1a1a;font-size:12px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--red);margin-top:4px;flex-shrink:0;"></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);min-width:110px;">2026-04-16 12:18</div>
+          <div style="color:var(--text-sec);">20 duplicado(s) detectado(s) — ~19.165 tokens desperdiciados</div>
+        </div>
+        <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #1a1a1a;font-size:12px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--red);margin-top:4px;flex-shrink:0;"></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);min-width:110px;">2026-04-16 12:32</div>
+          <div style="color:var(--text-sec);">15 duplicado(s) detectado(s) — ~10.199 tokens desperdiciados</div>
+        </div>
+        <div style="display:flex;gap:10px;padding:6px 0;font-size:12px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--red);margin-top:4px;flex-shrink:0;"></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);min-width:110px;">2026-04-15 12:11</div>
+          <div style="color:var(--text-sec);">34 duplicado(s) detectado(s) — ~9.461 tokens desperdiciados</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="step-note" style="text-align:center;border-top:none;margin-bottom:48px;">Ejemplo simulado — tus datos reales pueden variar</div>
+
+  <!-- ═══ PASO 1 ═══ -->
+  <div class="step">
+    <div class="step-number">1</div>
+    <div class="step-title">Instala las reglas</div>
+    <div class="step-text">
+      Vas a copiar <code>tokenguard.md</code> dentro de una carpeta específica de tu proyecto. Elige una de las dos opciones:
+    </div>
+
+    <div class="options">
+      <div class="option recommended">
+        <div class="option-label">Opción A — Recomendada</div>
+        <div class="option-title">Carpeta rules</div>
+        <div class="option-desc">Copia a <code>.claude/rules/</code> de tu proyecto. Se carga automáticamente junto a tu CLAUDE.md existente.</div>
+      </div>
+      <div class="option">
+        <div class="option-label">Opción B</div>
+        <div class="option-title">Añadir a CLAUDE.md</div>
+        <div class="option-desc">Pega el contenido al final de tu CLAUDE.md. Útil si prefieres tenerlo todo en un solo archivo.</div>
+      </div>
+    </div>
+
+    <div class="step-text">
+      Sustituye <code>tu-proyecto</code> por la ruta real de tu proyecto. Ejemplo: si tu proyecto está en <code>C:\dev\mi-app</code>, el comando se convierte en <code>mkdir -p C:\dev\mi-app\.claude\rules</code>
+    </div>
+
+    <div class="code-block">
+      <span class="code-comment"># Opción A — recomendada</span><br>
+      mkdir -p tu-proyecto/.claude/rules<br>
+      cp tokenguard.md tu-proyecto/.claude/rules/
+    </div>
+
+    <div class="code-block">
+      <span class="code-comment"># Opción B — añadir al CLAUDE.md existente</span><br>
+      cat tokenguard.md >> tu-proyecto/CLAUDE.md
+    </div>
+
+    <div class="step-text">
+      En Windows (cmd.exe): usa <code>mkdir tu-proyecto\.claude\rules</code> (sin el <code>-p</code>) y <code>copy tokenguard.md tu-proyecto\.claude\rules\</code>. En PowerShell y Git Bash los comandos de arriba funcionan tal cual.
+    </div>
+
+    <div class="step-note">
+      Eso es todo. Claude Code carga las reglas automáticamente en la siguiente sesión. Tu CLAUDE.md no se modifica.
+    </div>
+  </div>
+
+  <!-- ═══ PASO 2 ═══ -->
+  <div class="step">
+    <div class="step-number">2</div>
+    <div class="step-title">Trabaja con normalidad</div>
+    <div class="step-text">
+      Pídele a Claude una tarea grande. Verás que deja de abrir sub-agentes innecesarios y se ciñe a tu petición. Las reglas actúan en segundo plano — no necesitas cambiar tu forma de trabajar.
+    </div>
+    <div class="step-note">
+      Las reglas guían al agente, no a ti. Tú trabajas igual, él gasta menos.
+    </div>
+  </div>
+
+  <!-- ═══ PASO 3 ═══ -->
+  <div class="step">
+    <div class="step-number">3</div>
+    <div class="step-title">Genera un informe</div>
+    <div class="step-text">
+      Después de unas cuantas sesiones, comprueba la eficiencia real de tu agente. Necesitas Python 3.x instalado (descarga desde <a href="https://python.org" target="_blank" style="color:var(--green)">python.org</a> si no lo tienes). Ejecuta desde la carpeta TokenGuard:
+    </div>
+
+    <div class="code-block">python informe.py</div>
+
+    <div class="step-text">
+      El script lee los logs locales de Claude Code y genera un informe HTML. <strong>Cero tokens consumidos</strong> — es pura lectura de disco, sin llamadas a la API.
+    </div>
+
+    <div class="step-text">
+      ¿Dónde están los logs? El script los busca automáticamente, pero si necesitas la ruta:<br>
+      <strong>Windows:</strong> abre Ejecutar (Win+R), escribe <code>%USERPROFILE%\.claude\projects</code> y pulsa Enter.<br>
+      <strong>macOS / Linux:</strong> <code>~/.claude/projects/</code>
+    </div>
+
+    <div class="step-text">
+      Los informes se guardan en <code>reports/</code> con la fecha:
+    </div>
+
+    <div class="file-tree">
+      reports/<br>
+      ├── <span class="hl">report-2026-04-17.html</span> <span class="desc">← el más reciente</span><br>
+      ├── report-2026-04-15.html<br>
+      └── report-2026-04-12.html
+    </div>
+
+    <div class="step-note">
+      Abre cualquier informe en tu navegador. Ejecútalo cuando quieras para ver datos actualizados.
+    </div>
+  </div>
+
+  <!-- ═══ OPCIONES AVANZADAS ═══ -->
+  <div style="margin-top: 48px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--green);text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;">Opciones</div>
+    <div style="font-size:22px;font-weight:700;margin-bottom:20px;">Uso avanzado</div>
+
+    <div class="code-block">
+      <span class="code-comment"># Analizar las últimas 20 sesiones</span><br>
+      python informe.py --sessions 20<br><br>
+      <span class="code-comment"># Filtrar por nombre de proyecto</span><br>
+      python informe.py --project mi-app<br><br>
+      <span class="code-comment"># Ruta de salida personalizada</span><br>
+      python informe.py --output ~/Escritorio/informe.html
+    </div>
+  </div>
+
+  <!-- ═══ CONTENIDO DEL PAQUETE ═══ -->
+  <div style="margin-top: 48px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--green);text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;">Contenido</div>
+    <div style="font-size:22px;font-weight:700;margin-bottom:20px;">Qué incluye el paquete</div>
+
+    <div class="file-tree">
+      tokenguard-free/<br>
+      ├── <span class="hl">index.html</span> <span class="desc">← estás aquí</span><br>
+      ├── <span class="hl">CLAUDE.md</span> <span class="desc">← reglas (copia a tu proyecto)</span><br>
+      ├── <span class="hl">informe.py</span> <span class="desc">← generador de informes</span><br>
+      ├── <span class="hl">.claudeignore</span> <span class="desc">← exclusiones preconfiguradas</span><br>
+      ├── <span class="hl">settings.json</span> <span class="desc">← configuración optimizada</span><br>
+      ├── <span class="hl">benchmark-lite.sh</span> <span class="desc">← puntúa tu configuración (máx. 55/100)</span><br>
+      ├── template-report.html <span class="desc">← plantilla del informe</span><br>
+      ├── landing-pro.html <span class="desc">← información sobre Pro</span><br>
+      └── reports/ <span class="desc">← aquí se guardan los informes</span>
+    </div>
+  </div>
+
+  <!-- ═══ PRO UPSELL ═══ -->
+  <div class="pro-section">
+    <div class="pro-title">¿Quieres análisis más profundo?</div>
+    <div class="pro-features">
+      <div class="pro-feature"><span class="check">&#10003;</span> 15 reglas (vs 4 en la versión gratuita)</div>
+      <div class="pro-feature"><span class="check">&#10003;</span> 3 hooks activos que bloquean desperdicio en tiempo real</div>
+      <div class="pro-feature"><span class="check">&#10003;</span> Informe completo — desglose por herramienta, coste estimado, tendencias</div>
+      <div class="pro-feature"><span class="check">&#10003;</span> Recomendaciones personalizadas según tus patrones</div>
+      <div class="pro-feature"><span class="check">&#10003;</span> Benchmark completo — puntúa 100/100 (gratuito máximo 55)</div>
+      <div class="pro-feature"><span class="check">&#10003;</span> Guía de anti-patrones — 10 patrones con costes reales</div>
+    </div>
+    <a href="landing-pro.html" class="pro-btn">Activar Pro — $9</a>
+    <div class="pro-price"><span style="text-decoration:line-through;color:var(--text-muted);">$19</span> $9 · Precio de lanzamiento · Pago único · vía Gumroad</div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <img src="https://eps-sistema.com/firma-atalaya.png" alt="Atalaya" style="height:56px;margin-bottom:12px;display:block;margin-left:auto;margin-right:auto;">
+  <div>¿Preguntas o sugerencias? <a href="mailto:admin@atalaya.uno">admin@atalaya.uno</a></div>
+  <div class="footer-tagline">TokenGuard — Menos tokens. Más tareas.</div>
+</div>
+
+</body>
+</html>

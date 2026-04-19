@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TokenGuard — Informe</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root {
+    --bg: #0a0a0a;
+    --bg-card: #111111;
+    --bg-card-hover: #161616;
+    --border: #222222;
+    --text: #f5f5f5;
+    --text-secondary: #b0b0b0;
+    --text-muted: #787878;
+    --green: #5DCEA8;
+    --green-glow: rgba(93,206,168,0.2);
+    --red: #e07878;
+    --red-glow: rgba(224,120,120,0.2);
+    --yellow: #f0c674;
+    --pro-overlay: rgba(93,206,168,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ─── Header ─── */
+  .header {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .header-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--green);
+    text-shadow: 0 0 20px var(--green-glow);
+  }
+  .header-version {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    border: 1px solid var(--text-muted);
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+  .header-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.4;
+  }
+  .header-saving-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.2px;
+  }
+  .header-saving-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    text-shadow: 0 0 10px var(--green-glow);
+  }
+  .header-actions {
+    display: flex;
+    gap: 10px;
+  }
+  .btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn:hover { border-color: var(--text-secondary); color: var(--text); }
+  .btn-pro {
+    background: var(--green);
+    color: #0a0a0a;
+    border-color: var(--green);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .btn-pro:hover { opacity: 0.9; color: #0a0a0a; text-decoration: none; }
+  a.btn-pro:visited { color: #0a0a0a; }
+
+  /* ─── Layout ─── */
+  .dashboard {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* ─── Cards Grid ─── */
+  .cards-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: #333; }
+  .card-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .card-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 32px;
+    font-weight: 700;
+  }
+  .card-detail {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+  .card-value.green { color: var(--green); text-shadow: 0 0 15px var(--green-glow); }
+  .card-value.red { color: var(--red); text-shadow: 0 0 15px var(--red-glow); }
+  .card-value.yellow { color: var(--yellow); }
+  .card-value.muted { color: var(--text-muted); }
+
+  /* ─── Sections ─── */
+  .section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .section-title {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* ─── PRO Badge ─── */
+  .pro-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--green);
+    border: 1px solid var(--green);
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+  }
+  .pro-section {
+    position: relative;
+  }
+  .pro-section .pro-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10,10,10,0.75);
+    backdrop-filter: blur(2px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    z-index: 10;
+  }
+  .pro-overlay-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.3px;
+    margin-bottom: 12px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  }
+  .pro-overlay .btn-pro { font-size: 12px; padding: 6px 14px; }
+
+  /* ─── Table ─── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th {
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #1a1a1a;
+    color: var(--text-secondary);
+  }
+  td:first-child { color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+  tr:hover td { background: var(--bg-card-hover); }
+  .count-bad { color: var(--red); font-weight: 600; }
+  .count-ok { color: var(--green); }
+
+  /* ─── Bar Chart (CSS only) ─── */
+  .bar-chart { display: flex; flex-direction: column; gap: 6px; }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .bar-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-secondary);
+    min-width: 70px;
+    text-align: right;
+  }
+  .bar-track {
+    flex: 1;
+    height: 20px;
+    background: #1a1a1a;
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+  }
+  .bar-fill-good {
+    height: 100%;
+    background: #00e5a0;
+    opacity: 1;
+    transition: width 0.5s;
+  }
+  .bar-fill-bad {
+    height: 100%;
+    background: #ff4d6d;
+    opacity: 1;
+    transition: width 0.5s;
+  }
+  .bar-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    min-width: 40px;
+  }
+
+  /* ─── Gauge ─── */
+  .gauge-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+  }
+  .gauge-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+  }
+
+  /* ─── Changelog ─── */
+  .changelog-entry {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #1a1a1a;
+    font-size: 13px;
+  }
+  .changelog-entry:last-child { border-bottom: none; }
+  .changelog-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .changelog-dot.blocked { background: var(--green); box-shadow: 0 0 6px var(--green-glow); }
+  .changelog-dot.wasted { background: var(--red); box-shadow: 0 0 6px var(--red-glow); }
+  .changelog-dot.info { background: var(--text-muted); }
+  .changelog-text { color: var(--text-secondary); }
+  .changelog-text strong { color: var(--text); font-weight: 600; }
+  .changelog-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    min-width: 100px;
+  }
+
+  /* ─── Footer ─── */
+  .footer {
+    text-align: center;
+    padding: 32px;
+    font-size: 15px;
+    color: var(--text-secondary);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .footer a { color: var(--green); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .footer-tagline { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+
+  /* ─── Print ─── */
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <div class="header-logo">TokenGuard</div>
+    <div class="header-version" id="version-badge">FREE</div>
+  </div>
+  <div class="header-center">
+    <div class="header-saving-label">Ahorra tokens. Trabaja más. Paga menos.</div>
+  </div>
+  <div class="header-actions">
+    <a href="../landing-pro.html" target="_blank" class="btn btn-pro" id="btn-get-pro">Activar Pro</a>
+  </div>
+</div>
+
+<div class="dashboard">
+
+  <!-- Summary Cards -->
+  <div class="cards-row" id="summary-cards"></div>
+
+  <!-- Efficiency History -->
+  <div class="section" id="section-history">
+    <div class="section-title">Eficiencia por sesión</div>
+    <div class="bar-chart" id="history-chart"></div>
+  </div>
+
+  <!-- Top Re-read Files -->
+  <div class="section" id="section-rereads">
+    <div class="section-title">Archivos más releídos</div>
+    <table id="rereads-table">
+      <thead><tr><th>Archivo</th><th>Veces releído</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Changelog -->
+  <div class="section" id="section-changelog">
+    <div class="section-title">Registro de actividad</div>
+    <div id="changelog-entries"></div>
+  </div>
+
+  <!-- PRO: Tool Breakdown -->
+  <div class="section pro-section" id="section-tools">
+    <div class="section-title">Desglose de herramientas <span class="pro-badge">PRO</span></div>
+    <div class="bar-chart" id="tools-chart"></div>
+    <div class="pro-overlay" id="overlay-tools">
+      <div class="pro-overlay-text">Análisis herramienta por herramienta</div>
+      <a href="../landing-pro.html" target="_blank" class="btn btn-pro">Desbloquear Pro en Gumroad</a>
+    </div>
+  </div>
+
+  <!-- PRO: Cost Estimate -->
+  <div class="section pro-section" id="section-cost">
+    <div class="section-title">Impacto en coste estimado <span class="pro-badge">PRO</span></div>
+    <div style="padding: 24px; text-align: center;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 28px; color: var(--text-muted);">$—.——</div>
+      <div style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">Desperdiciado al mes (estimado)</div>
+    </div>
+    <div class="pro-overlay" id="overlay-cost">
+      <div class="pro-overlay-text">Análisis de coste en tu moneda</div>
+      <a href="../landing-pro.html" target="_blank" class="btn btn-pro">Desbloquear Pro en Gumroad</a>
+    </div>
+  </div>
+
+  <!-- PRO: Recommendations -->
+  <div class="section pro-section" id="section-recs">
+    <div class="section-title">Recomendaciones <span class="pro-badge">PRO</span></div>
+    <div style="padding: 16px; color: var(--text-muted); font-size: 13px;">
+      <div style="margin-bottom: 12px;">Según tus patrones de uso:</div>
+      <div style="margin-bottom: 8px;">1. Activar regla "NO RE-READS" — ahorra ~X tokens/sesión</div>
+      <div style="margin-bottom: 8px;">2. Activar hook Agent Guard — bloquea ~Y lanzamientos de sub-agentes</div>
+      <div>3. Añadir mapa de codebase a CLAUDE.md — reduce lecturas exploratorias</div>
+    </div>
+    <div class="pro-overlay" id="overlay-recs">
+      <div class="pro-overlay-text">Recomendaciones personalizadas</div>
+      <a href="../landing-pro.html" target="_blank" class="btn btn-pro">Desbloquear Pro en Gumroad</a>
+    </div>
+  </div>
+
+  <!-- PRO: Trend -->
+  <div class="section pro-section" id="section-trend">
+    <div class="section-title">Tendencia semanal <span class="pro-badge">PRO</span></div>
+    <div style="padding: 24px; text-align: center;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--text-muted);">
+        Tendencia de eficiencia — gráfico desbloqueado en Pro
+      </div>
+    </div>
+    <div class="pro-overlay" id="overlay-trend">
+      <div class="pro-overlay-text">Tendencias semanales y mensuales</div>
+      <a href="../landing-pro.html" target="_blank" class="btn btn-pro">Desbloquear Pro en Gumroad</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <img src="https://eps-sistema.com/firma-atalaya.png" alt="Atalaya" style="height:56px;margin-bottom:12px;display:block;margin-left:auto;margin-right:auto;">
+  <div>¿Preguntas o sugerencias? <a href="mailto:admin@atalaya.uno">admin@atalaya.uno</a></div>
+  <div class="footer-tagline">Generado por TokenGuard — Cero tokens consumidos</div>
+</div>
+
+<script>
+const REPORT_DATA = {"session_count": 8, "total_reads": 312, "total_duplicates": 118, "total_wasted_tokens": 178400, "total_tool_calls": 1840, "total_output_tokens": 980000, "avg_efficiency": 64.2, "streak": 2, "top_reread_files": [{"file": "README.md", "count": 8}, {"file": "src/index.js", "count": 6}, {"file": "package.json", "count": 5}, {"file": "src/components/App.jsx", "count": 4}, {"file": ".env.example", "count": 3}], "efficiency_history": [{"session": "demo-01", "date": "2026-04-11", "ratio": 52}, {"session": "demo-02", "date": "2026-04-12", "ratio": 58}, {"session": "demo-03", "date": "2026-04-13", "ratio": 62}, {"session": "demo-04", "date": "2026-04-14", "ratio": 66}, {"session": "demo-05", "date": "2026-04-15", "ratio": 68}, {"session": "demo-06", "date": "2026-04-16", "ratio": 71}, {"session": "demo-07", "date": "2026-04-17", "ratio": 74}, {"session": "demo-08", "date": "2026-04-18", "ratio": 76}], "tool_distribution": {"Bash": 920, "Read": 312, "Edit": 210, "Write": 148, "Grep": 89, "WebFetch": 42, "Agent": 8}, "sessions": [{"date": "2026-04-18", "session_id": "demo-08", "efficiency_ratio": 76, "unique_reads": 38, "total_reads": 50, "duplicate_reads": 12, "tokens_wasted_estimate": 15600}, {"date": "2026-04-17", "session_id": "demo-07", "efficiency_ratio": 74, "unique_reads": 37, "total_reads": 50, "duplicate_reads": 13, "tokens_wasted_estimate": 16900}, {"date": "2026-04-16", "session_id": "demo-06", "efficiency_ratio": 71, "unique_reads": 36, "total_reads": 51, "duplicate_reads": 15, "tokens_wasted_estimate": 19500}, {"date": "2026-04-15", "session_id": "demo-05", "efficiency_ratio": 68, "unique_reads": 34, "total_reads": 50, "duplicate_reads": 16, "tokens_wasted_estimate": 20800}, {"date": "2026-04-14", "session_id": "demo-04", "efficiency_ratio": 66, "unique_reads": 33, "total_reads": 50, "duplicate_reads": 17, "tokens_wasted_estimate": 22100}, {"date": "2026-04-13", "session_id": "demo-03", "efficiency_ratio": 62, "unique_reads": 31, "total_reads": 50, "duplicate_reads": 19, "tokens_wasted_estimate": 24700}, {"date": "2026-04-12", "session_id": "demo-02", "efficiency_ratio": 58, "unique_reads": 29, "total_reads": 50, "duplicate_reads": 21, "tokens_wasted_estimate": 27300}, {"date": "2026-04-11", "session_id": "demo-01", "efficiency_ratio": 52, "unique_reads": 26, "total_reads": 50, "duplicate_reads": 24, "tokens_wasted_estimate": 31200}]};
+const IS_PRO = false;
+
+(function() {
+  const D = typeof REPORT_DATA !== 'undefined' ? REPORT_DATA : null;
+  const PRO = typeof IS_PRO !== 'undefined' ? IS_PRO : false;
+
+  if (!D) {
+    document.querySelector('.dashboard').innerHTML = '<p style="color:#888;padding:40px;text-align:center">Sin datos. Ejecuta: python informe.py</p>';
+    return;
+  }
+
+  // ─── Onboarding state (no sessions or empty) ───
+  if (D.session_count === 0) {
+    document.querySelector('.dashboard').innerHTML = `
+      <div style="max-width:500px;margin:80px auto;text-align:center;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:48px;color:#5DCEA8;margin-bottom:24px;text-shadow:0 0 30px rgba(93,206,168,0.3);">0</div>
+        <div style="font-size:18px;color:#f5f5f5;margin-bottom:12px;">Aún no hay sesiones</div>
+        <div style="font-size:14px;color:#888;line-height:1.7;margin-bottom:32px;">
+          Usa Claude Code durante unas sesiones y vuelve a generar el informe.<br>
+          Tus logs se guardan en <code style="color:#5DCEA8;">~/.claude/projects/</code><br>
+          y TokenGuard los lee sin consumir ningún token.
+        </div>
+        <div style="background:#111;border:1px solid #222;border-radius:6px;padding:20px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:12px;color:#888;">
+          <div style="color:#555;margin-bottom:12px;">// Lo que verás tras unas sesiones:</div>
+          <div style="margin-bottom:6px;"><span style="color:#5DCEA8;">Sesiones analizadas</span>  10</div>
+          <div style="margin-bottom:6px;"><span style="color:#5DCEA8;">Eficiencia media</span>    74.2%</div>
+          <div style="margin-bottom:6px;"><span style="color:#e07878;">Tokens desperdiciados</span>     53,234</div>
+          <div><span style="color:#5DCEA8;">Racha</span>             3 sesiones &gt; 80%</div>
+        </div>
+        <div style="margin-top:32px;font-size:13px;color:#555;">
+          Ejecuta de nuevo: <code style="color:#5DCEA8;">python informe.py</code>
+        </div>
+      </div>`;
+    return;
+  }
+
+  // ─── Pro mode ───
+  if (PRO) {
+    document.getElementById('version-badge').textContent = 'PRO';
+    document.getElementById('version-badge').style.borderColor = '#5DCEA8';
+    document.getElementById('version-badge').style.color = '#5DCEA8';
+    document.getElementById('btn-get-pro').style.display = 'none';
+    document.querySelectorAll('.pro-overlay').forEach(el => el.style.display = 'none');
+  }
+
+  // ─── Summary Cards ───
+  const cardsHtml = `
+    <div class="card">
+      <div class="card-label">Sesiones analizadas</div>
+      <div class="card-value">${D.session_count}</div>
+      <div class="card-detail">Sesiones recientes</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Eficiencia media</div>
+      <div class="card-value ${D.avg_efficiency >= 80 ? 'green' : D.avg_efficiency >= 60 ? 'yellow' : 'red'}">${D.avg_efficiency}%</div>
+      <div class="card-detail">${D.avg_efficiency >= 80 ? 'Buena' : D.avg_efficiency >= 60 ? 'Mejorable' : 'Necesita atención'}</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Tokens desperdiciados</div>
+      <div class="card-value red">${D.total_wasted_tokens.toLocaleString()}</div>
+      <div class="card-detail">Por lecturas duplicadas</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Racha</div>
+      <div class="card-value ${D.streak > 0 ? 'green' : 'muted'}">${D.streak}</div>
+      <div class="card-detail">${D.streak > 0 ? 'Sesiones por encima del 80%' : 'Sigue así para empezar racha'}</div>
+    </div>
+  `;
+  document.getElementById('summary-cards').innerHTML = cardsHtml;
+
+  // ─── Efficiency History ───
+  const maxReads = Math.max(...D.sessions.map(s => s.total_reads), 1);
+  let historyHtml = '';
+  for (const s of D.sessions.slice().reverse()) {
+    const goodPct = s.total_reads > 0 ? (s.unique_reads / s.total_reads * 100) : 100;
+    const badPct = 100 - goodPct;
+    const dateLabel = s.date ? s.date.slice(8, 10) + '/' + s.date.slice(5, 7) : s.session_id;
+    historyHtml += `
+      <div class="bar-row">
+        <div class="bar-label">${dateLabel}</div>
+        <div class="bar-track">
+          <div class="bar-fill-good" style="width:${goodPct}%"></div>
+          <div class="bar-fill-bad" style="width:${badPct}%"></div>
+        </div>
+        <div class="bar-value">${s.efficiency_ratio}%</div>
+      </div>`;
+  }
+  document.getElementById('history-chart').innerHTML = historyHtml;
+
+  // ─── Top Re-read Files ───
+  const tbody = document.querySelector('#rereads-table tbody');
+  if (D.top_reread_files.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="2" style="color:var(--text-muted);text-align:center">No se detectaron lecturas duplicadas</td></tr>';
+  } else {
+    let rereadHtml = '';
+    for (const f of D.top_reread_files) {
+      rereadHtml += `<tr>
+        <td>${f.file}</td>
+        <td class="count-bad">${f.count}× de más</td>
+      </tr>`;
+    }
+    tbody.innerHTML = rereadHtml;
+  }
+
+  // ─── Changelog ───
+  let logHtml = '';
+  for (const s of D.sessions) {
+    if (s.duplicate_reads > 0) {
+      logHtml += `<div class="changelog-entry">
+        <div class="changelog-dot wasted"></div>
+        <div class="changelog-date">${s.date || s.session_id}</div>
+        <div class="changelog-text"><strong>${s.duplicate_reads} lectura(s) duplicada(s)</strong> detectadas — ~${s.tokens_wasted_estimate.toLocaleString()} tokens desperdiciados</div>
+      </div>`;
+    }
+    if (s.efficiency_ratio >= 90) {
+      logHtml += `<div class="changelog-entry">
+        <div class="changelog-dot blocked"></div>
+        <div class="changelog-date">${s.date || s.session_id}</div>
+        <div class="changelog-text"><strong>${s.efficiency_ratio}% eficiencia</strong> — sesión excelente</div>
+      </div>`;
+    }
+  }
+  if (!logHtml) {
+    logHtml = '<div style="color:var(--text-muted);padding:12px;text-align:center">Sin actividad que mostrar</div>';
+  }
+  document.getElementById('changelog-entries').innerHTML = logHtml;
+
+  // ─── PRO: Tool Breakdown ───
+  const tools = D.tool_distribution || {};
+  const maxTool = Math.max(...Object.values(tools), 1);
+  let toolsHtml = '';
+  const sortedTools = Object.entries(tools).sort((a,b) => b[1] - a[1]);
+  for (const [tool, count] of sortedTools) {
+    const pct = (count / maxTool * 100);
+    toolsHtml += `<div class="bar-row">
+      <div class="bar-label">${tool}</div>
+      <div class="bar-track"><div class="bar-fill-good" style="width:${pct}%"></div></div>
+      <div class="bar-value">${count}</div>
+    </div>`;
+  }
+  document.getElementById('tools-chart').innerHTML = toolsHtml;
+
+})();
+</script>
+
+</body>
+</html>

@@ -1,69 +1,83 @@
-# TokenGuard — Claude Code Token Savings Kit
+# TokenGuard — Kit de Ahorro de Tokens para Claude Code
 
-![TokenGuard Banner](free/banner-tokenguard-free.jpg)
+![TokenGuard Banner](banner-tokenguard-free.jpg)
 
-**Save 20-40% on Claude Code tokens by preventing waste before it happens.**
+**Reduce un 20-40% el consumo de tokens de Claude Code previniendo el desperdicio antes de que ocurra.**
 
-## The problem
+## El problema
 
-Every Claude Code session burns tokens on patterns you don't notice: unnecessary subagent launches (40K tokens each), reimplementing existing code (70K), context overflow from re-reading files (80K). One bad session can waste 300K+ tokens.
+Cada sesión de Claude Code quema tokens en patrones que no notas: lanzamientos innecesarios de sub-agentes (40K tokens cada uno), reimplementar código que ya existe (70K), desbordamiento de contexto por releer archivos (80K). Una mala sesión puede desperdiciar más de 300.000 tokens.
 
-## What TokenGuard does
+## Qué hace TokenGuard
 
-4 rules that target the most expensive anti-patterns. Drop them into your project and Claude Code immediately changes how it works.
+4 reglas que atacan los anti-patrones más caros. Cópialas en tu proyecto y Claude Code cambia inmediatamente cómo trabaja.
 
-| Anti-pattern | Cost per occurrence | TokenGuard rule |
+| Anti-patrón | Coste por ocurrencia | Regla TokenGuard |
 |---|---|---|
-| Reimplementing without checking | 70,000 tokens | CHECK FIRST |
-| Subagent instead of Grep | 40,000 tokens | GREP > AGENT |
-| Untested assumption chains | 112,000 tokens | ONE AT A TIME |
-| Scope creep on simple tasks | 45,000 tokens | ONLY WHAT'S ASKED |
+| Implementar sin verificar | 70.000 tokens | VERIFICA ANTES |
+| Sub-agente en vez de Grep | 40.000 tokens | GREP > AGENTE |
+| Cadenas de suposiciones sin probar | 112.000 tokens | UNO A LA VEZ |
+| Sobreingeniería en tareas simples | 45.000 tokens | SOLO LO QUE SE PIDE |
 
-## Quick start
+## Inicio rápido
+
+1. Copia `tokenguard.md` en `.claude/rules/` de tu proyecto (o añade su contenido a tu `CLAUDE.md`)
+2. Copia `.claudeignore` en la raíz de tu proyecto
+3. Copia `settings.json` en `.claude/settings.json` de tu proyecto
 
 ```bash
-# Copy into your project root
-cp free/CLAUDE.md your-project/CLAUDE.md
-cp free/.claudeignore your-project/.claudeignore
-cp free/settings.json your-project/.claude/settings.json
-
-# Score your setup
-bash free/benchmark-lite.sh
+# Ejemplo
+cp tokenguard.md tu-proyecto/.claude/rules/tokenguard.md
+cp .claudeignore tu-proyecto/.claudeignore
+cp settings.json tu-proyecto/.claude/settings.json
 ```
 
-Max score: **55/100** with the free tier.
+## Informe de eficiencia
 
-## What's included
+Ejecuta el generador de informes para ver cuántos tokens desperdicia tu agente:
 
-| File | Purpose |
+```bash
+python informe.py
+```
+
+Genera un dashboard HTML en `reports/` con tus métricas reales — sesiones analizadas, ratio de eficiencia, tokens desperdiciados, archivos más releídos. **Cero tokens consumidos** (solo lee logs locales).
+
+Puedes ver un ejemplo en `reports/report-DEMO.html`.
+
+## Contenido del paquete
+
+| Archivo | Función |
 |---|---|
-| `CLAUDE.md` | 4 production-tested rules |
-| `.claudeignore` | Pre-configured exclusion list (node_modules, dist, .git, etc.) |
-| `settings.json` | Optimized Claude Code settings |
-| `benchmark-lite.sh` | Score your setup across 3 metrics (max 55/100) |
+| `tokenguard.md` | 4 reglas de ahorro probadas en producción |
+| `informe.py` | Generador de informes de eficiencia (HTML) |
+| `template-report.html` | Plantilla del dashboard |
+| `.claudeignore` | Excluye archivos que Claude no necesita leer |
+| `settings.json` | Límite de thinking tokens preconfigurado |
+| `reports/report-DEMO.html` | Ejemplo de informe generado |
 
-## Want 40%? Get TokenGuard Pro
+## Las cuentas
 
-15 rules + 3 Python hooks that enforce savings automatically. Rules suggest — hooks enforce.
+| Anti-patrón | Coste por ocurrencia |
+|---|---|
+| Implementar sin verificar | 70.000 tokens |
+| Tormenta de sub-agentes (×3) | 120.000 tokens |
+| Desbordamiento de contexto | 80.000 tokens |
+| Sobreingeniería | 112.000 tokens |
+| **Una mala sesión** | **300.000+ tokens** |
 
-- **Agent Guard** — intercepts unnecessary subagent launches before they cost 40K tokens
-- **Session Savings** — tracks every intervention, reports total savings at session end
-- **Compact Reminder** — catches context overflow before you lose 80K tokens
+Con los precios de Anthropic, evitar una sola mala sesión compensa con creces.
 
-Full benchmark scoring up to 100/100. Anti-patterns guide with 10 documented patterns and real token costs.
+## TokenGuard Pro
 
-**$9 launch price** — first 50 customers. One-time payment, lifetime access.
+¿Quieres ir más allá? [TokenGuard Pro](https://epssistema.gumroad.com/l/tokenguard-pro) incluye:
 
-**[Get TokenGuard Pro →](https://4229038676731.gumroad.com/l/akaye)**
+- **15 reglas** de ahorro (11 adicionales)
+- **3 hooks en Python** que bloquean errores en tiempo real
+- **Benchmark completo** (100 puntos)
+- **Informe Pro** con todas las secciones desbloqueadas
 
-## Tested in production
+*Resultados basados en pruebas internas. Tu caso puede variar levemente.*
 
-Built from a system running Claude Code daily with 50+ PostgreSQL tables, multiple AI agents, and automated protocols. Not theory — extracted from real usage.
+## Licencia
 
-Benchmark results from controlled test (same 5 tasks, with and without TokenGuard):
-- Without: baseline token consumption
-- With TokenGuard Pro: ~40% reduction measured
-
-## License
-
-MIT
+MIT — Úsalo donde quieras.
