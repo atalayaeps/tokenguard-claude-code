@@ -69,7 +69,7 @@ Con los precios de Anthropic, evitar una sola mala sesión compensa con creces.
 
 ## TokenGuard Pro
 
-¿Quieres ir más allá? [TokenGuard Pro](https://epssistema.gumroad.com/l/tokenguard-pro) incluye:
+¿Quieres ir más allá? [TokenGuard Pro](https://4229038676731.gumroad.com/l/tokenguard-pro) incluye:
 
 - **15 reglas** de ahorro (11 adicionales)
 - **3 hooks en Python** que bloquean errores en tiempo real
