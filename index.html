@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TokenGuard — Kit de Ahorro de Tokens para Claude Code</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0b1510;
+    color: #c8e8d8;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 18px;
+    line-height: 1.8;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+  .banner {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 32px;
+  }
+  h1 {
+    color: #5DCEA8;
+    font-size: 32px;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .subtitle {
+    font-size: 20px;
+    color: #aaa;
+    margin-bottom: 32px;
+  }
+  .buttons {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 32px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.15s, opacity 0.15s;
+    flex: 1;
+    justify-content: center;
+    min-width: 220px;
+  }
+  .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+  .btn-github {
+    background: #fff;
+    color: #0b1510;
+  }
+  .btn-gumroad {
+    background: #5DCEA8;
+    color: #0b1510;
+  }
+  .btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+  .free-tag {
+    display: inline-block;
+    background: #5DCEA8;
+    color: #0b1510;
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+  h2 {
+    color: #5DCEA8;
+    font-size: 24px;
+    margin-top: 48px;
+    margin-bottom: 16px;
+  }
+  p { margin-bottom: 16px; }
+  ul {
+    padding-left: 24px;
+    margin-bottom: 20px;
+  }
+  li { margin-bottom: 10px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 17px;
+  }
+  th {
+    background: #1a2a20;
+    color: #5DCEA8;
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 15px;
+  }
+  td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #1a3a2a;
+  }
+  tr:nth-child(even) td { background: rgba(93,206,168,0.05); }
+  .highlight {
+    background: #111;
+    border-left: 3px solid #5DCEA8;
+    padding: 20px 24px;
+    margin: 20px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 17px;
+  }
+  code {
+    background: #1a2a20;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #5DCEA8;
+  }
+  .pro-section {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid #1a3a2a;
+  }
+  .pro-section h2 { color: #aaa; }
+  .pro-link {
+    color: #5DCEA8;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .pro-link:hover { text-decoration: underline; }
+  .footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid #1a3a2a;
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+  }
+  .disclaimer {
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+    margin-top: 24px;
+  }
+  @media (max-width: 600px) {
+    h1 { font-size: 26px; }
+    h2 { font-size: 20px; }
+    .subtitle { font-size: 18px; }
+    .buttons { flex-direction: column; }
+    .btn { min-width: 100%; }
+    td, th { padding: 10px 12px; font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <img class="banner" src="https://raw.githubusercontent.com/atalayaeps/tokenguard-claude-code/master/banner-tokenguard-free.jpg" alt="TokenGuard Banner">
+
+  <span class="free-tag">100% GRATIS</span>
+  <h1>TokenGuard — Kit de Ahorro de Tokens para Claude Code</h1>
+  <p class="subtitle">Reduce tu factura de Claude Code previniendo el desperdicio antes de que ocurra.</p>
+
+  <div class="buttons">
+    <a href="https://github.com/atalayaeps/tokenguard-claude-code" class="btn btn-github" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      Descargar en GitHub
+    </a>
+    <a href="https://4229038676731.gumroad.com/l/tokenguard-free" class="btn btn-gumroad" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l7 4.5-7 4.5z"/></svg>
+      Descargar en Gumroad
+    </a>
+  </div>
+
+  <h2>El problema</h2>
+  <p>Claude Code es potente pero caro. Una sola sesión mal configurada puede quemar más de 300.000 tokens en errores evitables — sub-agentes innecesarios, relecturas de archivos, reimplementar código que ya existe.</p>
+  <p>TokenGuard Free te da las herramientas para empezar a ahorrar hoy.</p>
+
+  <h2>4 reglas que cambian cómo trabaja Claude para ti</h2>
+  <p>Desde <strong>VERIFICA ANTES</strong> (ahorra 70K tokens por detección) hasta <strong>SOLO LO QUE SE PIDE</strong> (evita refactorizaciones no pedidas), cada regla ataca un anti-patrón concreto con coste de tokens documentado.</p>
+
+  <h2>Informe de eficiencia incluido</h2>
+  <div class="highlight">
+    Ejecuta <code>python informe.py</code> y obtén un dashboard HTML con tus métricas reales — sesiones analizadas, ratio de eficiencia, tokens desperdiciados, archivos más releídos.<br><br>
+    <strong>Cero tokens consumidos.</strong> Solo lee tus logs locales.
+  </div>
+
+  <h2>También incluido</h2>
+  <ul>
+    <li><strong>.claudeignore</strong> — Excluye archivos que Claude no necesita leer</li>
+    <li><strong>settings.json</strong> — Límite de thinking tokens preconfigurado</li>
+    <li><strong>Informe DEMO</strong> — Ve cómo se ve el dashboard antes de ejecutarlo</li>
+    <li><strong>Licencia MIT</strong> — Úsalo donde quieras</li>
+  </ul>
+
+  <h2>Las cuentas</h2>
+  <table>
+    <tr><th>Anti-patrón</th><th>Coste por ocurrencia</th></tr>
+    <tr><td>Implementar sin verificar</td><td>70.000 tokens</td></tr>
+    <tr><td>Tormenta de sub-agentes (×3)</td><td>120.000 tokens</td></tr>
+    <tr><td>Desbordamiento de contexto</td><td>80.000 tokens</td></tr>
+    <tr><td>Sobreingeniería</td><td>112.000 tokens</td></tr>
+    <tr><td><strong>Una mala sesión</strong></td><td><strong>300.000+ tokens</strong></td></tr>
+  </table>
+  <p>Con los precios de Anthropic, evitar una sola mala sesión compensa con creces.</p>
+
+  <p class="disclaimer">Resultados basados en pruebas internas. Tu caso puede variar levemente.</p>
+
+  <div class="pro-section">
+    <h2>¿Quieres ir más allá?</h2>
+    <p>15 reglas, 3 hooks en Python que bloquean errores en tiempo real, benchmark completo e informe con todas las secciones desbloqueadas.</p>
+    <a href="landing-pro.html" class="btn btn-github" style="max-width:320px;margin-top:16px;">Ver TokenGuard Pro</a>
+  </div>
+
+  <div class="footer">
+    TokenGuard by EPS · MIT License
+  </div>
+
+</div>
+</body>
+</html>
